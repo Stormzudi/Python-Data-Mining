@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @File  : c7.py
+# @Author: ZhuNian
+# @Date  : 2020/6/28 20:05
+
+"""
+1.题目：
+买卖股票的最佳时机含手续费
+
+2.解题思路：
+方法：动态规划
+"""
+
+
+class Solution:
+    def maxProfit(self, prices, fee):
+        cash = 0  # 不持有股票的收益
+        hold = -prices[0]  # 持有股票的收益
+        for i in range(1, len(prices)):
+            cash = max(cash, hold+prices[i]-fee)
+            hold = max(hold, cash - prices[i])
+            print(cash, hold)
+        return cash
+
+
+if __name__ == '__main__':
+    s = Solution()
+    r = s.maxProfit([1,2,1,9,3,4,9,1], 2)
+    print(r)
