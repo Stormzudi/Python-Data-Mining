@@ -36,6 +36,5 @@ def cluster_plot(d, k): #自定义作图函数来显示聚类结果
   return plt
 
 cluster_plot(d1, k).show()
-
 cluster_plot(d2, k).show()
 cluster_plot(d3, k).show()

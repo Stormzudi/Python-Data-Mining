@@ -12,5 +12,5 @@ from sklearn.decomposition import PCA
 
 pca = PCA()
 pca.fit(data)
-pca.components_ #返回模型的各个特征向量
-pca.explained_variance_ratio_ #返回各个成分各自的方差百分比
+pca.components_  # 返回模型的各个特征向量
+pca.explained_variance_ratio_  # 返回各个成分各自的方差百分比
