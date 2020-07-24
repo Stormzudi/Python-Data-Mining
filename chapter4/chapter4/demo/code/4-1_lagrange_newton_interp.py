@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @File  : 4-1_lagrange_newton_interp.py
 # @Author: Stormzudi
-# @Date  : 2020/7/22 16:01
+# @Date  : 2020/7/23 16:01
 
 # 拉格朗日插值代码
 import pandas as pd  # 导入数据分析库Pandas
