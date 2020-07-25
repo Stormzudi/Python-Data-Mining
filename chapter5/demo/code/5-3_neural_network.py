@@ -1,37 +1,59 @@
-#-*- coding: utf-8 -*-
-#Ê¹ÓÃÉñ¾­ÍøÂçËã·¨Ô¤²âÏúÁ¿¸ßµÍ
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @File  : 5-3_neural_network.py
+# @Author: Stormzudi
+# @Date  : 2020/7/24 22:27
+
+# ä½¿ç”¨ç¥ç»ç½‘ç»œç®—æ³•é¢„æµ‹é”€é‡é«˜ä½
 
 import pandas as pd
+from sklearn.metrics import confusion_matrix  # å¯¼å…¥æ··æ·†çŸ©é˜µå‡½æ•°
+from keras.models import Sequential
+from keras.layers.core import Dense, Activation
 
-#²ÎÊı³õÊ¼»¯
+# å‚æ•°åˆå§‹åŒ–
 inputfile = '../data/sales_data.xls'
-data = pd.read_excel(inputfile, index_col = u'ĞòºÅ') #µ¼ÈëÊı¾İ
+data = pd.read_excel(inputfile, index_col = u'ï¿½ï¿½ï¿½')  # å¯¼å…¥æ•°æ®
 
-#Êı¾İÊÇÀà±ğ±êÇ©£¬Òª½«Ëü×ª»»ÎªÊı¾İ
-#ÓÃ1À´±íÊ¾¡°ºÃ¡±¡¢¡°ÊÇ¡±¡¢¡°¸ß¡±ÕâÈı¸öÊôĞÔ£¬ÓÃ0À´±íÊ¾¡°»µ¡±¡¢¡°·ñ¡±¡¢¡°µÍ¡±
-data[data == u'ºÃ'] = 1
-data[data == u'ÊÇ'] = 1
-data[data == u'¸ß'] = 1
+# æ•°æ®æ˜¯ç±»åˆ«æ ‡ç­¾ï¼Œè¦å°†å®ƒè½¬åŒ–ä¸ºæ•°æ®
+# ç”¨1æ¥è¡¨ç¤ºâ€œå¥½â€ã€â€œæ˜¯â€ã€â€œé«˜â€è¿™3ä¸ªå±æ€§ï¼Œç”¨0æ¥è¡¨ç¤ºâ€œåâ€ã€â€œå¦â€ã€â€œä½â€
+
+data[data == u'å¥½'] = 1
+data[data == u'æ˜¯'] = 1
+data[data == u'é«˜'] = 1
 data[data != 1] = 0
 x = data.iloc[:,:3].as_matrix().astype(int)
 y = data.iloc[:,3].as_matrix().astype(int)
 
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
-
-model = Sequential() #½¨Á¢Ä£ĞÍ
+model = Sequential() #ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
 model.add(Dense(input_dim = 3, output_dim = 10))
-model.add(Activation('relu')) #ÓÃreluº¯Êı×÷Îª¼¤»îº¯Êı£¬ÄÜ¹»´ó·ùÌá¹©×¼È·¶È
+model.add(Activation('relu')) #ï¿½ï¿½reluï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½îº¯ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½á¹©×¼È·ï¿½ï¿½
 model.add(Dense(input_dim = 10, output_dim = 1))
-model.add(Activation('sigmoid')) #ÓÉÓÚÊÇ0-1Êä³ö£¬ÓÃsigmoidº¯Êı×÷Îª¼¤»îº¯Êı
+model.add(Activation('sigmoid')) #ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0-1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sigmoidï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½îº¯ï¿½ï¿½
 
 model.compile(loss = 'binary_crossentropy', optimizer = 'adam', class_mode = 'binary')
-#±àÒëÄ£ĞÍ¡£ÓÉÓÚÎÒÃÇ×öµÄÊÇ¶şÔª·ÖÀà£¬ËùÒÔÎÒÃÇÖ¸¶¨ËğÊ§º¯ÊıÎªbinary_crossentropy£¬ÒÔ¼°Ä£Ê½Îªbinary
-#ÁíÍâ³£¼ûµÄËğÊ§º¯Êı»¹ÓĞmean_squared_error¡¢categorical_crossentropyµÈ£¬ÇëÔÄ¶Á°ïÖúÎÄ¼ş¡£
-#Çó½â·½·¨ÎÒÃÇÖ¸¶¨ÓÃadam£¬»¹ÓĞsgd¡¢rmspropµÈ¿ÉÑ¡
+#ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Í¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½Ôªï¿½ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½Îªbinary_crossentropyï¿½ï¿½ï¿½Ô¼ï¿½Ä£Ê½Îªbinary
+#ï¿½ï¿½ï¿½â³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mean_squared_errorï¿½ï¿½categorical_crossentropyï¿½È£ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+#ï¿½ï¿½â·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½adamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sgdï¿½ï¿½rmspropï¿½È¿ï¿½Ñ¡
 
-model.fit(x, y, nb_epoch = 1000, batch_size = 10) #ÑµÁ·Ä£ĞÍ£¬Ñ§Ï°Ò»Ç§´Î
-yp = model.predict_classes(x).reshape(len(y)) #·ÖÀàÔ¤²â
+model.fit(x, y, nb_epoch = 1000, batch_size = 10) #Ñµï¿½ï¿½Ä£ï¿½Í£ï¿½Ñ§Ï°Ò»Ç§ï¿½ï¿½
+yp = model.predict_classes(x).reshape(len(y)) #ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½
 
-from cm_plot import * #µ¼Èë×ÔĞĞ±àĞ´µÄ»ìÏı¾ØÕó¿ÉÊÓ»¯º¯Êı
-cm_plot(y,yp).show() #ÏÔÊ¾»ìÏı¾ØÕó¿ÉÊÓ»¯½á¹û
+
+# ç”»å‡ºæ··æ·†çŸ©é˜µ
+def cm_plot(y, yp):
+    """
+    è¾“å…¥ï¼šyä¸ºçœŸå®å€¼ï¼Œypä¸ºé¢„æµ‹å€¼
+    """
+    cm = confusion_matrix(y, yp)  # æ··æ·†çŸ©é˜µ
+    import matplotlib.pyplot as plt  # å¯¼å…¥ä½œå›¾åº“
+    plt.matshow(cm, cmap=plt.cm.Greens)  # ç”»æ··æ·†çŸ©é˜µå›¾ï¼Œé…è‰²é£æ ¼ä½¿ç”¨cm.Greensï¼Œæ›´å¤šé£æ ¼è¯·å‚è€ƒå®˜ç½‘ã€‚
+    plt.colorbar()  # é¢œè‰²æ ‡ç­¾
+    for x in range(len(cm)):  # æ•°æ®æ ‡ç­¾
+        for y in range(len(cm)):
+            plt.annotate(cm[x, y], xy=(x, y), horizontalalignment='center', verticalalignment='center')
+    plt.ylabel('True label')  # åæ ‡è½´æ ‡ç­¾
+    plt.xlabel('Predicted label')  # åæ ‡è½´æ ‡ç­¾
+    plt.show()  # æ˜¾ç¤ºä½œå›¾ç»“æœ
+
+cm_plot(y, yp)

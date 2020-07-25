@@ -1,23 +1,24 @@
-#-*- coding: utf-8 -*-
-#Âß¼­»Ø¹é ×Ô¶¯½¨Ä£
+# -*- coding: utf-8 -*-
+# é€»è¾‘å›å½’ è‡ªåŠ¨æ¨¡å‹
 import pandas as pd
+from sklearn.linear_model import LogisticRegression as LR
+from stability_selection.randomized_lasso import RandomizedLogisticRegression as RLR
 
-#²ÎÊı³õÊ¼»¯
+
+# å‚æ•°åˆå§‹åŒ–
 filename = '../data/bankloan.xls'
 data = pd.read_excel(filename)
-x = data.iloc[:,:8].as_matrix()
-y = data.iloc[:,8].as_matrix()
+x = data.iloc[:, :8].values
+y = data.iloc[:, 8].values
 
-from sklearn.linear_model import LogisticRegression as LR
-from sklearn.linear_model import RandomizedLogisticRegression as RLR 
-rlr = RLR() #½¨Á¢Ëæ»úÂß¼­»Ø¹éÄ£ĞÍ£¬É¸Ñ¡±äÁ¿
-rlr.fit(x, y) #ÑµÁ·Ä£ĞÍ
-rlr.get_support() #»ñÈ¡ÌØÕ÷É¸Ñ¡½á¹û£¬Ò²¿ÉÒÔÍ¨¹ı.scores_·½·¨»ñÈ¡¸÷¸öÌØÕ÷µÄ·ÖÊı
-print(u'Í¨¹ıËæ»úÂß¼­»Ø¹éÄ£ĞÍÉ¸Ñ¡ÌØÕ÷½áÊø¡£')
-print(u'ÓĞĞ§ÌØÕ÷Îª£º%s' % ','.join(data.columns[rlr.get_support()]))
-x = data[data.columns[rlr.get_support()]].as_matrix() #É¸Ñ¡ºÃÌØÕ÷
+rlr = RLR()
+rlr.fit(x, y)
+rlr.get_support()
+print('é€šè¿‡éšæœºé€»è¾‘å›å½’æ¨¡å‹ç­›é€‰ç‰¹å¾ç»“æŸã€‚')
+print(u'æœ‰æ•ˆç‰¹å¾ä¸º:', ','.join(data.columns[rlr.get_support()]))
+x = data[data.columns[rlr.get_support()]].as_matrix()
 
-lr = LR() #½¨Á¢Âß¼­»õ¹ñÄ£ĞÍ
-lr.fit(x, y) #ÓÃÉ¸Ñ¡ºóµÄÌØÕ÷Êı¾İÀ´ÑµÁ·Ä£ĞÍ
-print(u'Âß¼­»Ø¹éÄ£ĞÍÑµÁ·½áÊø¡£')
-print(u'Ä£ĞÍµÄÆ½¾ùÕıÈ·ÂÊÎª£º%s' % lr.score(x, y)) #¸ø³öÄ£ĞÍµÄÆ½¾ùÕıÈ·ÂÊ£¬±¾ÀıÎª81.4%
+lr = LR()
+lr.fit(x, y)
+print('é€»è¾‘å›å½’æ¨¡å‹è®­ç»ƒç»“æœ')
+print('æ¨¡å‹çš„å¹³å‡æ­£ç¡®ç‡', lr.score(x, y))

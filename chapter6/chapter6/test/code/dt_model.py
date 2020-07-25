@@ -90,8 +90,8 @@ if __name__ == '__main__':
     data = pd.read_excel(datafile)  # 读取数据，数据的前三列是特征，第四列是标签
     # split(data)
     # decision_tree(data)
-    # cm_plot(data)
-    curve_roc(data)
+    cm_plot(data)
+    # curve_roc(data)
 
 
 
