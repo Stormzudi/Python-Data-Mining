@@ -44,22 +44,22 @@ from statsmodels.tsa.arima_model import ARIMA
 
 data[u'销量'] = data[u'销量'].astype(float)
 #定阶
-pmax = int(len(D_data)/10) #一般阶数不超过length/10
-qmax = int(len(D_data)/10) #一般阶数不超过length/10
+pmax = int(len(D_data)/10)  # 一般阶数不超过length/10
+qmax = int(len(D_data)/10)  # 一般阶数不超过length/10
 bic_matrix = [] #bic矩阵
 for p in range(pmax+1):
-  tmp = []
-  for q in range(qmax+1):
-    try: #存在部分报错，所以用try来跳过报错。
-      tmp.append(ARIMA(data, (p,1,q)).fit().bic)
-    except:
-      tmp.append(None)
-  bic_matrix.append(tmp)
+    tmp = []
+    for q in range(qmax+1):
+        try: #存在部分报错，所以用try来跳过报错。
+            tmp.append(ARIMA(data, (p,1,q)).fit().bic)
+        except:
+            tmp.append(None)
+    bic_matrix.append(tmp)
 
-bic_matrix = pd.DataFrame(bic_matrix) #从中可以找出最小值
+bic_matrix = pd.DataFrame(bic_matrix)  # 从中可以找出最小值
 
-p,q = bic_matrix.stack().idxmin() #先用stack展平，然后用idxmin找出最小值位置。
+p,q = bic_matrix.stack().idxmin()  # 先用stack展平，然后用idxmin找出最小值位置。
 print(u'BIC最小的p值和q值为：%s、%s' %(p,q)) 
-model = ARIMA(data, (p,1,q)).fit() #建立ARIMA(0, 1, 1)模型
-model.summary2() #给出一份模型报告
-model.forecast(5) #作为期5天的预测，返回预测结果、标准误差、置信区间。
+model = ARIMA(data, (p,1,q)).fit()  # 建立ARIMA(0, 1, 1)模型
+model.summary2()  # 给出一份模型报告
+model.forecast(5)  # 作为期5天的预测，返回预测结果、标准误差、置信区间。
