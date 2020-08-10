@@ -8,9 +8,9 @@
 ### 第3章 数据探索
 　　 [移步到 CSDN：https://blog.csdn.net/qq_41709378/article/details/107443244 ](https://blog.csdn.net/qq_41709378/article/details/107443244)
 ### 第4章 数据预处理
-&nbsp;
+　　 [移步到 CSDN：https://blog.csdn.net/qq_41709378/article/details/107443313 ](https://blog.csdn.net/qq_41709378/article/details/107443313)
 ### 第5章 挖掘建模
-&nbsp;
+　　 [移步到 CSDN：https://blog.csdn.net/qq_41709378/article/details/107523157 ](https://blog.csdn.net/qq_41709378/article/details/107523157)
 ### 第6章 电力窃漏电用户自动识别
 &nbsp;
 ### 第7章 航空公司客户价值分析
